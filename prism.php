@@ -10,13 +10,15 @@
 * Plugin Name:       Prism Syntax Highlighter for WordPress
 * Plugin URI:        http://nextgenthemes.com/plugins/prism
 * Description:       Most minimalistic yet most configurabale Prismjs integration plugin, includes shortcode for custom field content (detached)
-* Version:           1.0.1
+* Version:           1.0.2
 * Author:            Nicolas Jonas
 * Author URI:        https://nextgenthemes.com
+* Contributors:      techmagus
+* Contributors URI:  https://techmagus.ninja
 * License:           GPL-3.0
 * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
 * GitHub Plugin URI: https://github.com/nextgenthemes/prism
-* 
+*
 * WordPress-Plugin-Boilerplate: v2.6.1 (Only parts of it)
 */
 
@@ -41,7 +43,7 @@ class Prism {
 
 		add_action( 'admin_head',    array( $this, 'print_admin_css' ) );
 		add_action( 'media_buttons', array( $this, 'add_media_button' ), 11 );
-		add_action( 'admin_footer',  array( $this, 'print_admin_javascript' ) );		
+		add_action( 'admin_footer',  array( $this, 'print_admin_javascript' ) );
 
 		add_shortcode( 'prism', array( $this, 'shortcode' ) );
 	}
@@ -56,9 +58,9 @@ class Prism {
 		if ( is_file( $cssfile_dir ) ) {
 
 			wp_register_style( 'prism', $cssfile_url, array(), filemtime( $cssfile_dir ) );
-		
+
 		} else {
-			
+
 			wp_register_style( 'prism', plugins_url( 'prism.css', __FILE__ ), array(), self::PRISM_VERSION );
 		}
 	}
@@ -73,9 +75,9 @@ class Prism {
 		if ( is_file( $jsfile_dir ) ) {
 
 			wp_register_script( 'prism', $jsfile_url, array(), filemtime( $jsfile_dir ), true );
-		
+
 		} else {
-			
+
 			wp_register_script( 'prism', plugins_url( 'prism.js', __FILE__ ), array(), self::PRISM_VERSION, true );
 		}
 	}
@@ -109,21 +111,25 @@ class Prism {
 
 	public function shortcode( $atts, $content = null ) {
 
-		extract( shortcode_atts( 
+		extract( shortcode_atts(
 			array(
 				'field'            => false,
 				'url'              => false,
 				'post_id'          => false,
 				//* <code>
-				'language'         => 'none', 
+				'language'         => 'none',
 				//* <pre>
-				'id'               => false, 
+				'id'               => false,
 				'class'            => false,
-				'data_src'         => false, 
-				'data_start'       => false, 
-				'data_line'        => false, 
+				'data_src'         => false,
+				'data_start'       => false,
+				'data_line'        => false,
 				'data_line_offset' => false,
 				'data_manual'      => false,
+				'data_user'        => false,
+				'data_host'        => false,
+				'data_output'      => false,
+				'data_prompt'      => false,
 			),
 			$atts,
 			'prism'
@@ -137,6 +143,10 @@ class Prism {
 			'data-line'        => $data_line,
 			'data-line-offset' => $data_line_offset,
 			'data-manual'      => $data_manual,
+			'data-user'        => $data_user,
+			'data-host'        => $data_host,
+			'data-output'      => $data_output,
+			'data-prompt'      => $data_prompt,
 		);
 
 		$code_attr = array(
@@ -155,7 +165,7 @@ class Prism {
 			if ( is_wp_error( $response ) ) {
 
 				return sprintf( '<p><strong>Prism Shortcode Error:</strong> could not get remote content. WP_Error message:<br>%s</p>', esc_html( $response->get_error_message() ) );
-			
+
 			} elseif( 200 != $response['response']['code'] ) {
 
 				return sprintf( '<p><strong>Prism Shortcode Error:</strong> could not get remote content. HTTP response code %s</p>', esc_html( $response['response']['code'] ) );
@@ -164,7 +174,7 @@ class Prism {
 			wp_enqueue_style( 'prism' );
 			wp_enqueue_script( 'prism' );
 
-			return sprintf( 
+			return sprintf(
 				'<pre %s><code %s>%s</code></pre>',
 				$this->parse_attr( $pre_attr ),
 				$this->parse_attr( $code_attr ),
@@ -201,14 +211,14 @@ class Prism {
 		wp_enqueue_style( 'prism' );
 		wp_enqueue_script( 'prism' );
 
-		return sprintf( 
+		return sprintf(
 			'<pre %s><code %s>%s</code></pre>',
 			$this->parse_attr( $pre_attr ),
 			$this->parse_attr( $code_attr ),
 			esc_html( $field_content )
 		);
 	}
-	
+
 	public function parse_attr( $attr = array() ) {
 
 		$out = '';
