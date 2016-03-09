@@ -1,5 +1,5 @@
 ﻿=== Prism Highlighter for WordPress ===
-Contributors: (this should be a list of wordpress.org userid's)
+Contributors: laibcoms
 Donate link: https://techmagus.ninja
 Tags: prism, prismjs, code, syntax, highlighter, syntax highlighter, code highlighter, highlighter, highlighting
 Requires at least: 3.5.0

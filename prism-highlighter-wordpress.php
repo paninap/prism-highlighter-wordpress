@@ -1,6 +1,6 @@
 ﻿<?php
 /**
-  * @link               https://techmagus.ninja
+  * @link               https://techmagus.ninja/prism-highlighter-wordpress/
   * @since              1.0.0
   * @package            Prism_Highlighter_Wordpress
   * @author             techmagus
