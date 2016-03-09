@@ -1,5 +1,5 @@
 === Prism Syntax Highlighter for WordPress ===
-Contributors: nico23
+Contributors: nico23, laibcoms
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC
 Tags: prism, prismjs, code, syntax, highlighter, syntax highlighter, code highlighter, highlighter, highlighting, NSA, NSA spying
 Requires at least: 3.5.0
@@ -66,6 +66,13 @@ What data mining?
 1. Demo
 
 == Changelog ==
+
+### 1.0.2 ###
+* Added command-line plugin data- attributes: data-prompt, data-user, data-host, and data-output
+  * Shortcode syntax:
+    * [prism field="" language="bash" class="command-line" data_user="me" data_host="host" data_output=""]
+    * [prism field="" language="powershell" class="command-line" data_prompt="PS C:&#92;&gt;" data_output=""]
+  * For more info: http://prismjs.com/plugins/command-line/
 
 ### 1.0.1 ###
 * Added SVG icon for plugin installer
